@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>i2 Solution — Business Consulting & Digital Services</title>
+  <meta name="description" content="i2 Solution provides expert business consulting and digital services to forward-thinking companies. Strategy, technology, and growth — delivered."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:   #0a1628;
+      --navy2:  #0f2040;
+      --gold:   #c9a84c;
+      --gold2:  #e8c97a;
+      --cream:  #f5f0e8;
+      --mist:   #a8b4c4;
+      --white:  #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: linear-gradient(to bottom, rgba(10,22,40,0.95), transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--white);
+    }
+
+    .logo span { color: var(--gold); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--mist);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 8rem 4rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 70% 50%, rgba(201,168,76,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(15,32,64,0.8) 0%, transparent 70%),
+        linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+    }
+
+    /* Geometric accent lines */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      right: 8%;
+      width: 320px;
+      height: 320px;
+      border: 1px solid rgba(201,168,76,0.15);
+      transform: rotate(15deg);
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      top: 22%;
+      right: 12%;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(201,168,76,0.08);
+      transform: rotate(30deg);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.2s forwards;
+    }
+
+    .hero-eyebrow span {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+    }
+
+    .eyebrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.4s forwards;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: var(--mist);
+      max-width: 480px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.6s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--gold);
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold2);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+
+    .btn-primary:hover::before { transform: translateX(0); }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    .btn-secondary {
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mist);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.3s;
+    }
+
+    .btn-secondary:hover { color: var(--gold); }
+    .btn-secondary::after { content: '→'; transition: transform 0.3s; }
+    .btn-secondary:hover::after { transform: translateX(4px); }
+
+    /* ── DIVIDER ── */
+    .gold-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin: 0 auto 1rem;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 7rem 4rem;
+      position: relative;
+    }
+
+    .services::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 4rem; right: 4rem;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .section-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 0.01em;
+    }
+
+    h2 em { font-style: italic; color: var(--gold); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .service-card {
+      background: var(--navy);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s;
+    }
+
+    .service-card:hover { background: var(--navy2); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(201,168,76,0.12);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      transition: color 0.4s;
+    }
+
+    .service-card:hover .service-number {
+      color: rgba(201,168,76,0.25);
+    }
+
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .service-card p {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: var(--mist);
+      font-weight: 300;
+    }
+
+    /* ── WHY US ── */
+    .why {
+      padding: 7rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+    }
+
+    .why::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 4rem; right: 4rem;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    .why-text h2 { text-align: left; margin-bottom: 1.5rem; }
+
+    .why-text p {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--mist);
+      font-weight: 300;
+      margin-bottom: 1rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .stat {
+      border-left: 1px solid rgba(201,168,76,0.3);
+      padding-left: 1.5rem;
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--mist);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    /* ── INDUSTRIES ── */
+    .industries {
+      padding: 7rem 4rem;
+      position: relative;
+    }
+
+    .industries::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 4rem; right: 4rem;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    .industries-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 3rem;
+      justify-content: center;
+    }
+
+    .industry-tag {
+      padding: 0.7rem 1.6rem;
+      border: 1px solid rgba(201,168,76,0.2);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mist);
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .industry-tag:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201,168,76,0.05);
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 7rem 4rem;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(to bottom, var(--navy), var(--navy2));
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 4rem; right: 4rem;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    .contact h2 { margin-bottom: 1rem; }
+
+    .contact p {
+      font-size: 0.95rem;
+      color: var(--mist);
+      margin-bottom: 3rem;
+      font-weight: 300;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(201,168,76,0.3);
+      padding-bottom: 0.3rem;
+      transition: border-color 0.3s;
+    }
+
+    .contact-email:hover { border-color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: rgba(168,180,196,0.5);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-logo span { color: rgba(201,168,76,0.4); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav ul { display: none; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .services { padding: 5rem 1.5rem; }
+      .why { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
+      .industries { padding: 5rem 1.5rem; }
+      .contact { padding: 5rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">i<span>2</span> Solution</div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#industries">Industries</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span>Business Consulting & Digital Services</span>
+      </div>
+      <h1>Where <em>Strategy</em><br>Meets Execution</h1>
+      <p class="hero-sub">
+        i2 Solution partners with forward-thinking businesses to unlock growth, modernise operations, and build digital capabilities that last.
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary"><span>Start a Conversation</span></a>
+        <a href="#services" class="btn-secondary">Our Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="section-header reveal">
+      <span class="section-tag">What We Do</span>
+      <div class="gold-divider"></div>
+      <h2>Services Built for<br><em>Real Business Impact</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-number">01</div>
+        <h3>Business Consulting</h3>
+        <p>Strategic advisory for growth, operational efficiency, and market expansion. We diagnose the real problems and build actionable roadmaps that deliver measurable results.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-number">02</div>
+        <h3>Digital Transformation</h3>
+        <p>End-to-end digitisation of business processes. From workflow automation to cloud migration, we modernise how your business operates — without disrupting what works.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-number">03</div>
+        <h3>Technology Solutions</h3>
+        <p>Custom software, integrations, and AI-powered tools designed around your specific needs. We build systems that scale with your ambition, not against it.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-number">04</div>
+        <h3>Business Development</h3>
+        <p>Market entry strategy, lead generation frameworks, and partnership development. We help you find and win the right customers in competitive markets.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-number">05</div>
+        <h3>Process Optimisation</h3>
+        <p>Identify bottlenecks, eliminate waste, and redesign workflows for peak performance. Operational excellence is not a destination — it is a continuous practice.</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-number">06</div>
+        <h3>Digital Marketing</h3>
+        <p>Data-driven marketing strategies that build brand authority and generate qualified demand. From content to paid channels, we align every effort with revenue outcomes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why" id="about">
+    <div class="why-text reveal">
+      <span class="section-tag">Why i2 Solution</span>
+      <div class="gold-divider" style="margin: 0 0 1.5rem;"></div>
+      <h2>Boutique Expertise.<br><em>Enterprise Thinking.</em></h2>
+      <p>We are a focused consulting and digital services firm. That means every engagement gets senior attention, not junior bench-filling. We work as an extension of your team — aligned to your outcomes, not our billable hours.</p>
+      <p>Our approach combines deep business acumen with hands-on technical capability. Strategy without implementation is just advice. We stay until the work is done.</p>
+    </div>
+    <div class="stats reveal">
+      <div class="stat">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">15+</div>
+        <div class="stat-label">Countries Served</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Client Retention</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INDUSTRIES -->
+  <section class="industries" id="industries">
+    <div class="section-header reveal">
+      <span class="section-tag">Sectors We Serve</span>
+      <div class="gold-divider"></div>
+      <h2>Industry <em>Expertise</em></h2>
+    </div>
+    <div class="industries-list reveal">
+      <div class="industry-tag">Financial Services</div>
+      <div class="industry-tag">Real Estate</div>
+      <div class="industry-tag">Logistics & Supply Chain</div>
+      <div class="industry-tag">Retail & E-Commerce</div>
+      <div class="industry-tag">Healthcare</div>
+      <div class="industry-tag">Professional Services</div>
+      <div class="industry-tag">Manufacturing</div>
+      <div class="industry-tag">Technology</div>
+      <div class="industry-tag">Education</div>
+      <div class="industry-tag">Hospitality</div>
+      <div class="industry-tag">Government & Public Sector</div>
+      <div class="industry-tag">Media & Communications</div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="reveal">
+      <span class="section-tag">Get In Touch</span>
+      <div class="gold-divider"></div>
+      <h2>Ready to <em>Transform</em><br>Your Business?</h2>
+      <p>Tell us about your challenge. We respond within 24 hours with a clear perspective on how we can help.</p>
+      <a href="mailto:ayaz.ahmad@i2-solution.com" class="contact-email">ayaz.ahmad@i2-solution.com</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 i2 Solution. All rights reserved.</p>
+    <div class="footer-logo">i<span>2</span> Solution</div>
+    <p>London, The United Kingdom</p>
+  </footer>
+
+  <!-- SCROLL REVEAL -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
